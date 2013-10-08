@@ -1,5 +1,7 @@
 # BezahlCode PHP Library
 
+[![Latest Stable Version](https://poser.pugx.org/mjaschen/bezahlcode/v/stable.png)](https://packagist.org/packages/mjaschen/bezahlcode)
+
 ## Introduction
 
 *BezahlCode* is a PHP library for creating BezahlCode QR-Code images.
