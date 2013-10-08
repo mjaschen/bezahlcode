@@ -13,7 +13,7 @@
 ``` json
 {
     "require": {
-        "mjaschen/bezahlcode": "0.1.0"
+        "mjaschen/bezahlcode": "0.1.1"
     }
 }
 ```

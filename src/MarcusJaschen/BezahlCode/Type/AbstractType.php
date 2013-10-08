@@ -49,7 +49,7 @@ abstract class AbstractType
     /**
      * @var array
      */
-    protected $params = [];
+    protected $params = array();
 
     /**
      * Sets a query parameter
