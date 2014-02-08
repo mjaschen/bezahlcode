@@ -4,7 +4,7 @@
 
 ## Introduction
 
-*BezahlCode* is a PHP library for creating BezahlCode QR-Code images.
+*BezahlCode* is a PHP library for creating BezahlCode QR-Code images and URIs.
 
 ## Installation
 
