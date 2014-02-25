@@ -1,10 +1,10 @@
 <?php
 /**
- * BezahlCode Standing Order Type
+ * BezahlCode SEPA Standing Order Type
  *
  * PHP version 5
  *
- * @category  Bezahlcode
+ * @category  BezahlCode
  * @package   Type
  * @author    Marcus Jaschen <mail@marcusjaschen.de>
  * @copyright 2013 r03.org
@@ -15,23 +15,23 @@
 namespace MarcusJaschen\BezahlCode\Type;
 
 /**
- * BezahlCode Standing Order Type
+ * BezahlCode SEPA Standing Order Type
  *
- * @category Bezahlcode
+ * @category BezahlCode
  * @package  Type
  * @author   Marcus Jaschen <mail@marcusjaschen.de>
  * @license  http://www.opensource.org/licenses/mit-license MIT License
  * @link     http://r03.org/
  */
-class Transfer extends AbstractType
+class SepaPeriodicTransfer extends AbstractType
 {
     /**
      * @var array
      */
     protected $params = array(
         'name'                       => null,
-        'account'                    => null,
-        'bnc'                        => null,
+        'iban'                       => null,
+        'bic'                        => null,
         'amount'                     => null,
         'reason'                     => null,
         'reason1'                    => null,
@@ -49,10 +49,9 @@ class Transfer extends AbstractType
         'reason13'                   => null,
         'reason14'                   => null,
         'reason15'                   => null,
-        'postingkey'                 => null,
-        'postingkeyextension'        => null,
         'currency'                   => null,
         'executiondate'              => null,
+        'separeference'              => null,
         'periodictimeunit'           => null,
         'periodictimeunitrotation'   => null,
         'periodicfirstexecutiondate' => null,
@@ -64,23 +63,23 @@ class Transfer extends AbstractType
      */
     public function __construct()
     {
-        $this->authority = 'periodicsinglepayment';
+        $this->authority = 'periodicsinglepaymentsepa';
     }
 
     /**
      * Shortcut method to set basic transfer options at once
      *
      * @param string $name Account Owner
-     * @param int $account
-     * @param int $bnc
+     * @param string $iban
+     * @param string $bic
      * @param float $amount
      * @param string $reason
      */
-    public function setTransferData($name, $account, $bnc, $amount, $reason)
+    public function setTransferData($name, $iban, $bic, $amount, $reason)
     {
         $this->setParam('name', trim($name));
-        $this->setParam('account', trim($account));
-        $this->setParam('bnc', trim($bnc));
+        $this->setParam('iban', trim($iban));
+        $this->setParam('bic', trim($bic));
         $this->setParam('amount', number_format($amount, 2, ',', ''));
         $this->setParam('reason', trim($reason));
     }
