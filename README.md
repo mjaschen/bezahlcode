@@ -114,7 +114,7 @@ Saving a BezahlCode to a file and getting the BezahlCode URI works as described 
 
 ## Bugs / To Do
 
-* TODO: implement missing authorities (*singledirectdebit, periodicsinglepayment, contact, contactv2*)
+* TODO: implement missing authorities (*contact, contactv2*)
 * TODO: write more Tests
 
 ## Credits
