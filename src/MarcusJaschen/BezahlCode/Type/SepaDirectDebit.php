@@ -23,7 +23,7 @@ namespace MarcusJaschen\BezahlCode\Type;
  * @license  http://www.opensource.org/licenses/mit-license MIT License
  * @link     http://r03.org/
  */
-class SepaTransfer extends AbstractType
+class SepaDirectDebit extends AbstractType
 {
     /**
      * @var array
@@ -62,6 +62,6 @@ class SepaTransfer extends AbstractType
      */
     public function __construct()
     {
-        $this->authority = 'singlepaymentsepa';
+        $this->authority = 'singledirectdebitsepa';
     }
 }
