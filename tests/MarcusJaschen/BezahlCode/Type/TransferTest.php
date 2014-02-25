@@ -70,4 +70,36 @@ class TransferTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->bezahlCode->getBezahlCodeURI());
     }
+
+    /**
+     * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException
+     */
+    public function testSetParamThrowsExceptionAsExpected()
+    {
+        $this->bezahlCode->setParam('notExistingParameter', true);
+    }
+
+    /**
+     * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException
+     */
+    public function testGetParamThrowsExceptionAsExpected()
+    {
+        $this->bezahlCode->getParam('notExistingParameter');
+    }
+
+    /**
+     * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException
+     */
+    public function testSetQRCodeParamThrowsExceptionAsExpected()
+    {
+        $this->bezahlCode->setQrSetting('notExistingQRCodeParameter', true);
+    }
+
+    /**
+     * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException
+     */
+    public function testGetQRCodeParamThrowsExceptionAsExpected()
+    {
+        $this->bezahlCode->getQrSetting('notExistingQRCodeParameter');
+    }
 }

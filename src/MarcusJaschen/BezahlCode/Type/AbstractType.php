@@ -14,6 +14,8 @@
 
 namespace MarcusJaschen\BezahlCode\Type;
 
+use MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException;
+use MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException;
 use PHPQRCode\QRcode;
 
 /**
@@ -62,7 +64,7 @@ abstract class AbstractType
     public function setParam($param, $value)
     {
         if (! array_key_exists($param, $this->params)) {
-            throw new \InvalidArgumentException("Param {$param} not exist");
+            throw new InvalidParameterException("Param {$param} not exist");
         }
 
         $this->params[$param] = $value;
@@ -80,7 +82,7 @@ abstract class AbstractType
     public function getParam($param)
     {
         if (! array_key_exists($param, $this->params)) {
-            throw new \InvalidArgumentException("Param {$param} not exist");
+            throw new InvalidParameterException("Param {$param} not exist");
         }
 
         return $this->params[$param];
@@ -103,7 +105,7 @@ abstract class AbstractType
     public function setQrSetting($param, $value)
     {
         if (! array_key_exists($param, $this->qrSettings)) {
-            throw new \InvalidArgumentException("Param {$param} not exist");
+            throw new InvalidQRCodeParameterException("Param {$param} not exist");
         }
 
         $this->qrSettings[$param] = $value;
@@ -121,7 +123,7 @@ abstract class AbstractType
     public function getQrSetting($param)
     {
         if (! array_key_exists($param, $this->qrSettings)) {
-            throw new \InvalidArgumentException("Param {$param} not exist");
+            throw new InvalidQRCodeParameterException("Param {$param} not exist");
         }
 
         return $this->qrSettings[$param];
