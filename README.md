@@ -123,3 +123,4 @@ Saving a BezahlCode to a file and getting the BezahlCode URI works as described 
 * [PHP QR Code Library](http://phpqrcode.sourceforge.net)
 * [Ariel Ferrandini](https://github.com/aferrandini) - PHP QR Code Composer Package
 * [BezahlCode](http://www.bezahlcode.de/)
+* BezahlCode [Specification](http://www.bezahlcode.de/wp-content/uploads/BezahlCode_TechDok.pdf) (PDF)
