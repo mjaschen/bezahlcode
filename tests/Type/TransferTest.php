@@ -22,7 +22,7 @@ class TransferTest extends \PHPUnit_Framework_TestCase
     /**
      *
      */
-    public function testSuccessfulSetParam()
+    public function testSetParamWorksAsExpected()
     {
         $name = 'Marcus Jaschen';
 
@@ -32,31 +32,18 @@ class TransferTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     *
      */
-    public function testFailSetParamInvalid()
-    {
-        $this->bezahlCode->setParam('invalid_param_name', 'x');
-    }
-
-    public function testSuccessfulSetQrSetting()
+    public function testSetQrSettingWorksAsExpected()
     {
         $this->bezahlCode->setQrSetting('level', 'H');
         $this->assertEquals('H', $this->bezahlCode->getQrSetting('level'));
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFailSetInvalidQrSetting()
-    {
-        $this->bezahlCode->setQrSetting('invalid_param_name', 'x');
-    }
-
-    /**
      *
      */
-    public function testGetBezahlCodeURI()
+    public function testGetBezahlCodeURIWorksAsExpected()
     {
         $this->bezahlCode->setTransferData(
             'Marcus Jaschen',

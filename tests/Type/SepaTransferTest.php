@@ -22,7 +22,7 @@ class SepaTransferTest extends \PHPUnit_Framework_TestCase
     /**
      *
      */
-    public function testGetBezahlCodeURI()
+    public function testGetBezahlCodeURIWorksAsExpected()
     {
         $this->bezahlCode->setTransferData(
             'Marcus Jaschen',
