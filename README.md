@@ -13,14 +13,12 @@
 ``` json
 {
     "require": {
-        "mjaschen/bezahlcode": "~0.2.0"
+        "mjaschen/bezahlcode": "~1.0"
     }
 }
 ```
 
 ## Usage
-
-Currently only two types are implemented: *Classic Transfer* and *SEPA Transfer.*
 
 ### SEPA Transfer
 
@@ -111,6 +109,13 @@ echo $bezahlCode->getBezahlCode();
 ```
 
 Saving a BezahlCode to a file and getting the BezahlCode URI works as described in the *SEPA Transfer* section.
+
+### Other Types
+
+* Periodic Transfer
+* Periodic SEPA Transfer
+* Direct Debit
+* SEPA Direct Debit
 
 ## Bugs / To Do
 
