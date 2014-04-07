@@ -53,7 +53,7 @@ class TransferTest extends \PHPUnit_Framework_TestCase
             "Test Transfer"
         );
 
-        $expected = "bank://singlepayment?name=Marcus+Jaschen&account=1234567890&bnc=10050000&amount=99%2C99&reason=Test+Transfer";
+        $expected = "bank://singlepayment?name=Marcus%20Jaschen&account=1234567890&bnc=10050000&amount=99%2C99&reason=Test%20Transfer";
 
         $this->assertEquals($expected, $this->bezahlCode->getBezahlCodeURI());
     }

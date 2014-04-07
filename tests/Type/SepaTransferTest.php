@@ -32,7 +32,7 @@ class SepaTransferTest extends \PHPUnit_Framework_TestCase
             "Test SEPA Transfer"
         );
 
-        $expected = "bank://singlepaymentsepa?name=Marcus+Jaschen&iban=DE12345678901234567890&bic=SPARDEFFXXX&amount=99%2C99&reason=Test+SEPA+Transfer";
+        $expected = "bank://singlepaymentsepa?name=Marcus%20Jaschen&iban=DE12345678901234567890&bic=SPARDEFFXXX&amount=99%2C99&reason=Test%20SEPA%20Transfer";
 
         $this->assertEquals($expected, $this->bezahlCode->getBezahlCodeURI());
     }
