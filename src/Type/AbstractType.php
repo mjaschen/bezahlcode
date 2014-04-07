@@ -144,7 +144,7 @@ abstract class AbstractType
             }
         }
 
-        return sprintf("%s://%s?%s", $this->scheme, $this->authority, http_build_query($data));
+        return sprintf("%s://%s?%s", $this->scheme, $this->authority, http_build_query($data, '', '&', PHP_QUERY_RFC3986));
     }
 
     /**
