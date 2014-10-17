@@ -10,6 +10,14 @@
 
 *BezahlCode* is installed via [Composer](http://getcomposer.org/):
 
+Just add it to your `composer.json` by running (preferred method):
+
+```
+composer require mjaschen/bezahlcode
+```
+
+Or add it manually to your `composer.json` (legacy method):
+
 ``` json
 {
     "require": {
