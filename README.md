@@ -47,7 +47,7 @@ Output a BezahlCode image directly to the browser:
 
 use MarcusJaschen\BezahlCode\Type\SepaTransfer;
 
-$bezahlcode = new SepaTransfer();
+$bezahlCode = new SepaTransfer();
 
 $bezahlCode->setTransferData(
     "Marcus Jaschen",
@@ -68,7 +68,7 @@ Save a BezahlCode image to a file:
 
 use MarcusJaschen\BezahlCode\Type\SepaTransfer;
 
-$bezahlcode = new SepaTransfer();
+$bezahlCode = new SepaTransfer();
 
 $bezahlCode->setTransferData(
     "Marcus Jaschen",
@@ -90,7 +90,7 @@ Get BezahlCode URI:
 
 use MarcusJaschen\BezahlCode\Type\SepaTransfer;
 
-$bezahlcode = new SepaTransfer();
+$bezahlCode = new SepaTransfer();
 
 $bezahlCode->setTransferData(
     "Marcus Jaschen",
@@ -100,7 +100,7 @@ $bezahlCode->setTransferData(
     "Test SEPA Transfer"
 );
 
-echo $bezahlcode->getBezahlCodeURI();
+echo $bezahlCode->getBezahlCodeURI();
 ```
 
 ### Classic Transfer
@@ -112,7 +112,7 @@ Output a BezahlCode image directly to the browser:
 
 use MarcusJaschen\BezahlCode\Type\Transfer;
 
-$bezahlcode = new Transfer();
+$bezahlCode = new Transfer();
 
 $bezahlCode->setTransferData(
     "Marcus Jaschen",
