@@ -9,7 +9,7 @@
         {
             "name" : "Marcus Jaschen",
             "email" : "mail@marcusjaschen.de",
-            "homepage" : "https://marcusjaschen.de/"
+            "homepage" : "https://www.marcusjaschen.de/"
         }
     ],
     "support" : {
@@ -20,7 +20,7 @@
         "aferrandini/phpqrcode" : "~1.0.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7.0"
+        "phpunit/phpunit": "~4.0"
     },
     "autoload" : {
         "psr-4" : {
