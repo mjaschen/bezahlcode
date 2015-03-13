@@ -6,6 +6,16 @@
 
 *BezahlCode* is a PHP library for creating BezahlCode QR-Code images and URIs.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+	- [SEPA Transfer](#sepa-transfer)
+	- [Classic Transfer](#classic-transfer)
+	- [Other Types](#other-types)
+- [Bugs / To Do](#bugs-to-do)
+- [Credits](#credits)
+
 ## Installation
 
 *BezahlCode* is installed via [Composer](http://getcomposer.org/):
