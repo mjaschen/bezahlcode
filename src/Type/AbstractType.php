@@ -16,7 +16,8 @@ namespace MarcusJaschen\BezahlCode\Type;
 
 use MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException;
 use MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException;
-use PHPQRCode\QRcode;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\ErrorCorrectionLevel;
 
 /**
  * Abstract BezahlCode Type Class
@@ -33,9 +34,9 @@ abstract class AbstractType
      * @var array
      */
     protected $qrSettings = array(
-        'level'  => 'L',
-        'size'   => 4,
-        'margin' => 4,
+        'level'  => ErrorCorrectionLevel::LOW,
+        'size'   => 300,
+        'margin' => 10,
     );
 
     /**
@@ -154,7 +155,12 @@ abstract class AbstractType
      */
     public function saveBezahlCode($file)
     {
-        QRcode::png($this->getBezahlCodeURI(), $file, $this->qrSettings['level'], $this->qrSettings['size'], $this->qrSettings['margin'], false);
+        $qrCode = new QRcode($this->getBezahlCodeURI());
+        $qrCode->setErrorCorrectionLevel($this->qrSettings['level']);
+        $qrCode->setSize($this->qrSettings['size']);
+        $qrCode->setMargin($this->qrSettings['margin']);
+        $qrCode->setWriterByName('png');
+        $qrCode->writeFile($file);
     }
 
     /**
@@ -164,9 +170,12 @@ abstract class AbstractType
      */
     public function getBezahlCode()
     {
-        ob_start();
-        QRcode::png($this->getBezahlCodeURI(), false, $this->qrSettings['level'], $this->qrSettings['size'], $this->qrSettings['margin'], false);
-        return ob_get_clean();
+        $qrCode = new QRcode($this->getBezahlCodeURI());
+        $qrCode->setErrorCorrectionLevel($this->qrSettings['level']);
+        $qrCode->setSize($this->qrSettings['size']);
+        $qrCode->setMargin($this->qrSettings['margin']);
+        $qrCode->setWriterByName('png');
+        return $qrCode->writeString();
     }
 
 }
