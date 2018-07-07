@@ -1,15 +1,48 @@
+sudo: false
+
 language: php
 
 php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - hhvm
+  - 7.1
+  - 7.2
 
-before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev
+cache:
+  directories:
+  - vendor
+  - $HOME/.composer/cache
 
-script: phpunit
+env:
+  matrix:
+  - DEPENDENCIES=latest
+  - DEPENDENCIES=oldest
+
+before_install:
+- phpenv config-rm xdebug.ini
+
+install:
+- >
+  echo;
+  if [ "$DEPENDENCIES" = "latest" ]; then
+    echo "Installing the latest dependencies";
+    composer update --with-dependencies --prefer-stable --prefer-dist
+  else
+    echo "Installing the lowest dependencies";
+    composer update --with-dependencies --prefer-stable --prefer-dist --prefer-lowest
+  fi;
+  composer show;
+
+script:
+- >
+  echo;
+  echo "Validating the composer.json";
+  composer validate --no-check-all --no-check-lock --strict;
+
+- >
+  echo;
+  echo "Linting all PHP files";
+  composer ci:lint;
+
+- >
+  echo;
+  echo "Running the PHPUnit tests";
+  composer ci:tests;
