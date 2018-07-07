@@ -16,6 +16,12 @@
 - [Bugs / To Do](#bugs-to-do)
 - [Credits](#credits)
 
+## Requirements
+
+*BezahlCode* requires at least PHP 7.1.
+
+If you're using an older PHP version, you can install *BezahlCode* 1.x which is compatible to PHP versions >= 5.3.
+
 ## Installation
 
 *BezahlCode* is installed via [Composer](http://getcomposer.org/):
@@ -31,7 +37,7 @@ Or add it manually to your `composer.json` (legacy method):
 ``` json
 {
     "require": {
-        "mjaschen/bezahlcode": "~1.0"
+        "mjaschen/bezahlcode": "~2.0"
     }
 }
 ```
