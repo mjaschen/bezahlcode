@@ -2,7 +2,9 @@
 
 namespace MarcusJaschen\BezahlCode\Type;
 
-class SepaTransferTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class SepaTransferTest extends TestCase
 {
     /**
      * @var SepaTransfer

@@ -2,7 +2,9 @@
 
 namespace MarcusJaschen\BezahlCode\Type;
 
-class TransferTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class TransferTest extends TestCase
 {
     /**
      * @var \MarcusJaschen\Bezahlcode\Type\Transfer

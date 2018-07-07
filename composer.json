@@ -20,7 +20,7 @@
         "endroid/qr-code" : "~3.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~7.0"
     },
     "autoload" : {
         "psr-4" : {
