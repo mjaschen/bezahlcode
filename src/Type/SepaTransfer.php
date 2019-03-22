@@ -1,27 +1,12 @@
 <?php
-/**
- * BezahlCode SEPA Transfer Type
- *
- * PHP version 5
- *
- * @category  BezahlCode
- * @package   Type
- * @author    Marcus Jaschen <mail@marcusjaschen.de>
- * @copyright 2013 r03.org
- * @license   http://www.opensource.org/licenses/mit-license MIT License
- * @link      http://r03.org/
- */
+declare(strict_types=1);
 
 namespace MarcusJaschen\BezahlCode\Type;
 
 /**
- * BezahlCode SEPA Transfer Type
+ * BezahlCode SEPA Transfer Type.
  *
- * @category BezahlCode
- * @package  Type
- * @author   Marcus Jaschen <mail@marcusjaschen.de>
- * @license  http://www.opensource.org/licenses/mit-license MIT License
- * @link     http://r03.org/
+ * @author Marcus Jaschen <mail@marcusjaschen.de>
  */
 class SepaTransfer extends AbstractType
 {
@@ -63,7 +48,7 @@ class SepaTransfer extends AbstractType
     }
 
     /**
-     * Shortcut method to set basic transfer options at once
+     * Shortcut method to set basic transfer options at once.
      *
      * @param string $name Account Owner
      * @param string $iban

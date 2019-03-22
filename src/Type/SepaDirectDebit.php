@@ -1,27 +1,12 @@
 <?php
-/**
- * BezahlCode SEPA Debit Type
- *
- * PHP version 5
- *
- * @category  BezahlCode
- * @package   Type
- * @author    Marcus Jaschen <mail@marcusjaschen.de>
- * @copyright 2013 r03.org
- * @license   http://www.opensource.org/licenses/mit-license MIT License
- * @link      http://r03.org/
- */
+declare(strict_types=1);
 
 namespace MarcusJaschen\BezahlCode\Type;
 
 /**
- * BezahlCode SEPA Debit Type
+ * BezahlCode SEPA Debit Type.
  *
- * @category BezahlCode
- * @package  Type
- * @author   Marcus Jaschen <mail@marcusjaschen.de>
- * @license  http://www.opensource.org/licenses/mit-license MIT License
- * @link     http://r03.org/
+ * @author Marcus Jaschen <mail@marcusjaschen.de>
  */
 class SepaDirectDebit extends AbstractType
 {

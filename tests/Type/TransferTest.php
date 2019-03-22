@@ -7,63 +7,59 @@ use PHPUnit\Framework\TestCase;
 class TransferTest extends TestCase
 {
     /**
-     * @var \MarcusJaschen\Bezahlcode\Type\Transfer
+     * @var Transfer
      */
     protected $bezahlCode;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->bezahlCode = new Transfer();
-    }
-
-    public function tearDown()
-    {
-        unset($this->bezahlCode);
     }
 
     /**
      *
      */
-    public function testSetParamWorksAsExpected()
+    public function testSetParamWorksAsExpected(): void
     {
         $name = 'Marcus Jaschen';
 
         $this->bezahlCode->setParam('name', $name);
 
-        $this->assertEquals($name, $this->bezahlCode->getParam('name'));
+        self::assertEquals($name, $this->bezahlCode->getParam('name'));
     }
 
     /**
      *
      */
-    public function testSetQrSettingWorksAsExpected()
+    public function testSetQrSettingWorksAsExpected(): void
     {
         $this->bezahlCode->setQrSetting('level', 'H');
-        $this->assertEquals('H', $this->bezahlCode->getQrSetting('level'));
+        self::assertEquals('H', $this->bezahlCode->getQrSetting('level'));
     }
 
     /**
      *
      */
-    public function testGetBezahlCodeURIWorksAsExpected()
+    public function testGetBezahlCodeURIWorksAsExpected(): void
     {
         $this->bezahlCode->setTransferData(
             'Marcus Jaschen',
-            "1234567890",
-            "10050000",
+            '1234567890',
+            '10050000',
             99.99,
-            "Test Transfer"
+            'Test Transfer'
         );
 
-        $expected = "bank://singlepayment?name=Marcus%20Jaschen&account=1234567890&bnc=10050000&amount=99%2C99&reason=Test%20Transfer";
+        $expected = 'bank://singlepayment?name=Marcus%20Jaschen&account=1234567890';
+        $expected .= '&bnc=10050000&amount=99%2C99&reason=Test%20Transfer';
 
-        $this->assertEquals($expected, $this->bezahlCode->getBezahlCodeURI());
+        self::assertEquals($expected, $this->bezahlCode->getBezahlCodeURI());
     }
 
     /**
      * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException
      */
-    public function testSetParamThrowsExceptionAsExpected()
+    public function testSetParamThrowsExceptionAsExpected(): void
     {
         $this->bezahlCode->setParam('notExistingParameter', true);
     }
@@ -71,7 +67,7 @@ class TransferTest extends TestCase
     /**
      * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException
      */
-    public function testGetParamThrowsExceptionAsExpected()
+    public function testGetParamThrowsExceptionAsExpected(): void
     {
         $this->bezahlCode->getParam('notExistingParameter');
     }
@@ -79,7 +75,7 @@ class TransferTest extends TestCase
     /**
      * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException
      */
-    public function testSetQRCodeParamThrowsExceptionAsExpected()
+    public function testSetQRCodeParamThrowsExceptionAsExpected(): void
     {
         $this->bezahlCode->setQrSetting('notExistingQRCodeParameter', true);
     }
@@ -87,7 +83,7 @@ class TransferTest extends TestCase
     /**
      * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException
      */
-    public function testGetQRCodeParamThrowsExceptionAsExpected()
+    public function testGetQRCodeParamThrowsExceptionAsExpected(): void
     {
         $this->bezahlCode->getQrSetting('notExistingQRCodeParameter');
     }
