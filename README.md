@@ -37,7 +37,7 @@ Or add it manually to your `composer.json` (legacy method):
 ``` json
 {
     "require": {
-        "mjaschen/bezahlcode": "~2.0"
+        "mjaschen/bezahlcode": "2.0"
     }
 }
 ```
