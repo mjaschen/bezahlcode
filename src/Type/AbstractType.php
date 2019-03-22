@@ -146,7 +146,7 @@ abstract class AbstractType
     public function saveBezahlCode($file): void
     {
         $qrCode = new QRcode($this->getBezahlCodeURI());
-        $qrCode->setErrorCorrectionLevel($this->qrSettings['level']);
+        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel($this->qrSettings['level']));
         $qrCode->setSize($this->qrSettings['size']);
         $qrCode->setMargin($this->qrSettings['margin']);
         $qrCode->setWriterByName('png');
