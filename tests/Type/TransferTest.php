@@ -2,6 +2,8 @@
 
 namespace MarcusJaschen\BezahlCode\Type;
 
+use MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException;
+use MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException;
 use PHPUnit\Framework\TestCase;
 
 class TransferTest extends TestCase
@@ -11,7 +13,7 @@ class TransferTest extends TestCase
      */
     protected $bezahlCode;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bezahlCode = new Transfer();
     }
@@ -56,35 +58,27 @@ class TransferTest extends TestCase
         self::assertEquals($expected, $this->bezahlCode->getBezahlCodeURI());
     }
 
-    /**
-     * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException
-     */
     public function testSetParamThrowsExceptionAsExpected(): void
     {
+        $this->expectException(InvalidParameterException::class);
         $this->bezahlCode->setParam('notExistingParameter', true);
     }
 
-    /**
-     * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException
-     */
     public function testGetParamThrowsExceptionAsExpected(): void
     {
+        $this->expectException(InvalidParameterException::class);
         $this->bezahlCode->getParam('notExistingParameter');
     }
 
-    /**
-     * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException
-     */
     public function testSetQRCodeParamThrowsExceptionAsExpected(): void
     {
+        $this->expectException(InvalidQRCodeParameterException::class);
         $this->bezahlCode->setQrSetting('notExistingQRCodeParameter', true);
     }
 
-    /**
-     * @expectedException \MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException
-     */
     public function testGetQRCodeParamThrowsExceptionAsExpected(): void
     {
+        $this->expectException(InvalidQRCodeParameterException::class);
         $this->bezahlCode->getQrSetting('notExistingQRCodeParameter');
     }
 }

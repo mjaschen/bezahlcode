@@ -49,6 +49,7 @@ class PeriodicTransfer extends AbstractType
      */
     public function __construct()
     {
+        parent::__construct();
         $this->authority = 'periodicsinglepayment';
     }
 

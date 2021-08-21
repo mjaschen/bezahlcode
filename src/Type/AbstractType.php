@@ -3,8 +3,16 @@ declare(strict_types=1);
 
 namespace MarcusJaschen\BezahlCode\Type;
 
-use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
 use Endroid\QrCode\QrCode;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\EpsWriter;
+use Endroid\QrCode\Writer\PdfWriter;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\SvgWriter;
+use Endroid\QrCode\Writer\WriterInterface;
 use MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException;
 use MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException;
 
@@ -18,11 +26,7 @@ abstract class AbstractType
     /**
      * @var array
      */
-    protected $qrSettings = [
-        'level' => ErrorCorrectionLevel::LOW,
-        'size' => 300,
-        'margin' => 10,
-    ];
+    protected $qrSettings;
 
     /**
      * @var string
@@ -38,6 +42,17 @@ abstract class AbstractType
      * @var array
      */
     protected $params = [];
+
+    public function __construct()
+    {
+        $this->qrSettings  = [
+            'level' => new ErrorCorrectionLevelLow(),
+            'size' => 300,
+            'margin' => 10,
+            'foreground' => new Color(0, 0, 0),
+            'background' => new Color(255, 255, 255),
+        ];
+    }
 
     /**
      * Sets a query parameter
@@ -138,19 +153,42 @@ abstract class AbstractType
         );
     }
 
+    protected function generateBezahlCode(): QrCode
+    {
+        return QrCode::create($this->getBezahlCodeURI())
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel($this->qrSettings['level'])
+            ->setSize($this->qrSettings['size'])
+            ->setMargin($this->qrSettings['margin'])
+            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->setForegroundColor($this->qrSettings['foreground'])
+            ->setBackgroundColor($this->qrSettings['background']);
+    }
+
+    protected function getWriter($type): WriterInterface
+    {
+        switch (strtolower($type)) {
+            case 'png':
+                return new PngWriter();
+            case 'eps':
+                return new EpsWriter();
+            case 'pdf':
+                return new PdfWriter();
+            case 'svg':
+                return new SvgWriter();
+            default:
+                throw new \InvalidArgumentException("Writer {$type} does not exist");
+        }
+    }
+
     /**
      * Saves the BezahlCode QR-Code as PNG image
      *
      * @param string $file
      */
-    public function saveBezahlCode($file): void
+    public function saveBezahlCode($file, $type = 'png'): void
     {
-        $qrCode = new QRcode($this->getBezahlCodeURI());
-        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel($this->qrSettings['level']));
-        $qrCode->setSize($this->qrSettings['size']);
-        $qrCode->setMargin($this->qrSettings['margin']);
-        $qrCode->setWriterByName('png');
-        $qrCode->writeFile($file);
+        ($this->getWriter($type))->write($this->generateBezahlCode())->saveToFile($file);
     }
 
     /**
@@ -158,14 +196,8 @@ abstract class AbstractType
      *
      * @return string Binary PNG image data
      */
-    public function getBezahlCode(): string
+    public function getBezahlCode($type = 'png'): string
     {
-        $qrCode = new QRcode($this->getBezahlCodeURI());
-        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel($this->qrSettings['level']));
-        $qrCode->setSize($this->qrSettings['size']);
-        $qrCode->setMargin($this->qrSettings['margin']);
-        $qrCode->setWriterByName('png');
-
-        return $qrCode->writeString();
+        return ($this->getWriter($type))->write($this->generateBezahlCode())->getString();
     }
 }

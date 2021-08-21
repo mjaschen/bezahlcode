@@ -47,6 +47,7 @@ class SepaDirectDebit extends AbstractType
      */
     public function __construct()
     {
+        parent::__construct();
         $this->authority = 'singledirectdebitsepa';
     }
 }

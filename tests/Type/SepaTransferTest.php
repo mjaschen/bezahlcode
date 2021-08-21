@@ -11,7 +11,7 @@ class SepaTransferTest extends TestCase
      */
     protected $bezahlCode;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bezahlCode = new SepaTransfer();
     }

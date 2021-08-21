@@ -45,6 +45,7 @@ class DirectDebit extends AbstractType
      */
     public function __construct()
     {
+        parent::__construct();
         $this->authority = 'singledirectdebit';
     }
 }
