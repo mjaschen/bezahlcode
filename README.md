@@ -18,28 +18,21 @@
 
 ## Requirements
 
-*BezahlCode* requires at least PHP 7.1.
+*BezahlCode* requires at least PHP 7.3. PHP 8.0 is fully supported.
 
-If you're using an older PHP version, you can install *BezahlCode* 1.x which is compatible to PHP versions >= 5.3.
+If you're using an older PHP version, you can install:
+
+- *BezahlCode* 2.x which is compatible to PHP versions >= 7.1 or
+- *BezahlCode* 1.x which is compatible to PHP versions >= 5.3.
 
 ## Installation
 
 *BezahlCode* is installed via [Composer](http://getcomposer.org/):
 
-Just add it to your `composer.json` by running (preferred method):
+Just add it to your `composer.json` by running:
 
 ```
 composer require mjaschen/bezahlcode
-```
-
-Or add it manually to your `composer.json` (legacy method):
-
-``` json
-{
-    "require": {
-        "mjaschen/bezahlcode": "2.0"
-    }
-}
 ```
 
 ## Usage
@@ -64,7 +57,7 @@ $bezahlCode->setTransferData(
 );
 
 header('Content-type: image/png');
-echo $bezahlCode->getBezahlCode();
+echo $bezahlCode->getBezahlCode('png');
 ```
 
 Save a BezahlCode image to a file:
@@ -84,9 +77,9 @@ $bezahlCode->setTransferData(
     "Test SEPA Transfer"
 );
 
-$file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "bezahlcode_test.png";
+$file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "bezahlcode_test.svg";
 
-$bezahlCode->saveBezahlCode($file);
+$bezahlCode->saveBezahlCode($file, 'svg');
 ```
 
 Get BezahlCode URI:
