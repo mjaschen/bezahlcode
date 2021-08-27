@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MarcusJaschen\BezahlCode\Type;
 
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelInterface;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
@@ -16,15 +18,10 @@ use Endroid\QrCode\Writer\WriterInterface;
 use MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException;
 use MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException;
 
-/**
- * Abstract BezahlCode Type Class
- *
- * @author Marcus Jaschen <mail@marcusjaschen.de>
- */
 abstract class AbstractType
 {
     /**
-     * @var array
+     * @var array{level: ErrorCorrectionLevelInterface, size: int, margin: int, foreground: Color, background: Color}
      */
     protected $qrSettings;
 
@@ -39,13 +36,13 @@ abstract class AbstractType
     protected $authority;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $params = [];
 
     public function __construct()
     {
-        $this->qrSettings  = [
+        $this->qrSettings = [
             'level' => new ErrorCorrectionLevelLow(),
             'size' => 300,
             'margin' => 10,
@@ -55,92 +52,82 @@ abstract class AbstractType
     }
 
     /**
-     * Sets a query parameter
+     * Sets a Bezahlcode parameter.
      *
-     * @param string $param
-     * @param mixed $value
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidParameterException
      */
-    public function setParam($param, $value): void
+    public function setParam(string $param, string $value): void
     {
         if (!array_key_exists($param, $this->params)) {
-            throw new InvalidParameterException("Param {$param} not exist");
+            throw new InvalidParameterException('Parameter unknown: ' . $param, 1402429834);
         }
 
         $this->params[$param] = $value;
     }
 
     /**
-     * Returns a query parameter
+     * Returns a Bezahlcode parameter.
      *
-     * @param string $param
-     *
-     * @return mixed
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidParameterException
      */
-    public function getParam($param)
+    public function getParam(string $param): string
     {
         if (!array_key_exists($param, $this->params)) {
-            throw new InvalidParameterException("Param {$param} not exist");
+            throw new InvalidParameterException('Parameter unknown: ' . $param, 5413113740);
         }
 
         return $this->params[$param];
     }
 
     /**
-     * Change a QR code setting
+     * Change a QR code setting.
      *
      * Supported settings:
      *
      * - `level` (default: "L")
      * - `size` (default "4")
      * - `margin` (default "4")
+     * - `foreground`
+     * - `background`
      *
-     * @param string $param
-     * @param mixed $value
+     * @param int|Color|ErrorCorrectionLevelInterface $value
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidQRCodeParameterException
      */
-    public function setQrSetting($param, $value): void
+    public function setQrSetting(string $param, $value): void
     {
         if (!array_key_exists($param, $this->qrSettings)) {
-            throw new InvalidQRCodeParameterException("Param {$param} not exist");
+            throw new InvalidQRCodeParameterException('Parameter unknown: ' . $param, 6699321536);
         }
 
         $this->qrSettings[$param] = $value;
     }
 
     /**
-     * Returns a QR code setting
+     * Returns a QR code setting.
      *
-     * @param string $param
+     * @return int|Color|ErrorCorrectionLevelInterface
      *
-     * @return mixed
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidQRCodeParameterException
      */
-    public function getQrSetting($param)
+    public function getQrSetting(string $param)
     {
         if (!array_key_exists($param, $this->qrSettings)) {
-            throw new InvalidQRCodeParameterException("Param {$param} not exist");
+            throw new InvalidQRCodeParameterException('Parameter unknown: ' . $param, 5444009391);
         }
 
         return $this->qrSettings[$param];
     }
 
     /**
-     * Creates URI from transfer data
-     *
-     * @return string
+     * Creates URI from transfer data.
      */
     public function getBezahlCodeURI(): string
     {
         $data = [];
 
         foreach ($this->params as $key => $value) {
-            if (null !== $value) {
+            if ($value !== null) {
                 $data[$key] = $value;
             }
         }
@@ -151,6 +138,16 @@ abstract class AbstractType
             $this->authority,
             str_replace('+', '%20', http_build_query($data, '', '&'))
         );
+    }
+
+    public function saveBezahlCode(string $file, string $type = 'png'): void
+    {
+        $this->getWriter($type)->write($this->generateBezahlCode())->saveToFile($file);
+    }
+
+    public function getBezahlCode(string $type = 'png'): string
+    {
+        return $this->getWriter($type)->write($this->generateBezahlCode())->getString();
     }
 
     protected function generateBezahlCode(): QrCode
@@ -165,7 +162,7 @@ abstract class AbstractType
             ->setBackgroundColor($this->qrSettings['background']);
     }
 
-    protected function getWriter($type): WriterInterface
+    protected function getWriter(string $type): WriterInterface
     {
         switch (strtolower($type)) {
             case 'png':
@@ -179,25 +176,5 @@ abstract class AbstractType
             default:
                 throw new \InvalidArgumentException("Writer {$type} does not exist");
         }
-    }
-
-    /**
-     * Saves the BezahlCode QR-Code as PNG image
-     *
-     * @param string $file
-     */
-    public function saveBezahlCode($file, $type = 'png'): void
-    {
-        ($this->getWriter($type))->write($this->generateBezahlCode())->saveToFile($file);
-    }
-
-    /**
-     * Returns the BezahlCode QR-Code as PNG image data.
-     *
-     * @return string Binary PNG image data
-     */
-    public function getBezahlCode($type = 'png'): string
-    {
-        return ($this->getWriter($type))->write($this->generateBezahlCode())->getString();
     }
 }
