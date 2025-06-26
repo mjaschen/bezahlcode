@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace MarcusJaschen\BezahlCode\Type;
 
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Builder\BuilderInterface;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelInterface;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\EpsWriter;
 use Endroid\QrCode\Writer\PdfWriter;
 use Endroid\QrCode\Writer\PngWriter;
@@ -21,7 +21,7 @@ use MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException;
 abstract class AbstractType
 {
     /**
-     * @var array{level: ErrorCorrectionLevelInterface, size: int, margin: int, foreground: Color, background: Color}
+     * @var array{level: ErrorCorrectionLevel, size: int, margin: int, foreground: Color, background: Color}
      */
     protected $qrSettings;
 
@@ -43,7 +43,7 @@ abstract class AbstractType
     public function __construct()
     {
         $this->qrSettings = [
-            'level' => new ErrorCorrectionLevelLow(),
+            'level' => ErrorCorrectionLevel::Low,
             'size' => 300,
             'margin' => 10,
             'foreground' => new Color(0, 0, 0),
@@ -90,7 +90,7 @@ abstract class AbstractType
      * - `foreground`
      * - `background`
      *
-     * @param int|Color|ErrorCorrectionLevelInterface $value
+     * @param int|Color|ErrorCorrectionLevel $value
      *
      * @throws InvalidQRCodeParameterException
      */
@@ -106,11 +106,11 @@ abstract class AbstractType
     /**
      * Returns a QR code setting.
      *
-     * @return int|Color|ErrorCorrectionLevelInterface
+     * @return int|Color|ErrorCorrectionLevel
      *
      * @throws InvalidQRCodeParameterException
      */
-    public function getQrSetting(string $param)
+    public function getQrSetting(string $param): int|ErrorCorrectionLevel|Color
     {
         if (!array_key_exists($param, $this->qrSettings)) {
             throw new InvalidQRCodeParameterException('Parameter unknown: ' . $param, 5444009391);
@@ -124,13 +124,7 @@ abstract class AbstractType
      */
     public function getBezahlCodeURI(): string
     {
-        $data = [];
-
-        foreach ($this->params as $key => $value) {
-            if ($value !== null) {
-                $data[$key] = $value;
-            }
-        }
+        $data = array_filter($this->params, fn($value) => $value !== null);
 
         return sprintf(
             '%s://%s?%s',
@@ -142,39 +136,36 @@ abstract class AbstractType
 
     public function saveBezahlCode(string $file, string $type = 'png'): void
     {
-        $this->getWriter($type)->write($this->generateBezahlCode())->saveToFile($file);
+        $this->generateBezahlCode($this->getWriter($type))->build()->saveToFile($file);
     }
 
     public function getBezahlCode(string $type = 'png'): string
     {
-        return $this->getWriter($type)->write($this->generateBezahlCode())->getString();
+        return $this->generateBezahlCode($this->getWriter($type))->build()->getString();
     }
 
-    protected function generateBezahlCode(): QrCode
+    protected function generateBezahlCode(WriterInterface $writer): BuilderInterface
     {
-        return QrCode::create($this->getBezahlCodeURI())
-            ->setEncoding(new Encoding('UTF-8'))
-            ->setErrorCorrectionLevel($this->qrSettings['level'])
-            ->setSize($this->qrSettings['size'])
-            ->setMargin($this->qrSettings['margin'])
-            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->setForegroundColor($this->qrSettings['foreground'])
-            ->setBackgroundColor($this->qrSettings['background']);
+        return new Builder(
+            writer: $writer,
+            encoding: new Encoding('UTF-8'),
+            errorCorrectionLevel: $this->qrSettings['level'],
+            size: $this->qrSettings['size'],
+            margin: $this->qrSettings['margin'],
+            roundBlockSizeMode: RoundBlockSizeMode::Margin,
+            foregroundColor: $this->qrSettings['foreground'],
+            backgroundColor: $this->qrSettings['background'],
+        );
     }
 
     protected function getWriter(string $type): WriterInterface
     {
-        switch (strtolower($type)) {
-            case 'png':
-                return new PngWriter();
-            case 'eps':
-                return new EpsWriter();
-            case 'pdf':
-                return new PdfWriter();
-            case 'svg':
-                return new SvgWriter();
-            default:
-                throw new \InvalidArgumentException("Writer {$type} does not exist");
-        }
+        return match (strtolower($type)) {
+            'png' => new PngWriter(),
+            'eps' => new EpsWriter(),
+            'pdf' => new PdfWriter(),
+            'svg' => new SvgWriter(),
+            default => throw new \InvalidArgumentException("Writer {$type} does not exist"),
+        };
     }
 }
