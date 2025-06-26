@@ -1,6 +1,6 @@
 # BezahlCode PHP Library
 
-[![Build Status](https://travis-ci.org/mjaschen/bezahlcode.png?branch=master)](https://travis-ci.org/mjaschen/bezahlcode) [![Latest Stable Version](https://poser.pugx.org/mjaschen/bezahlcode/v/stable.png)](https://packagist.org/packages/mjaschen/bezahlcode)
+[![Bezahlcode Tests](https://github.com/mjaschen/bezahlcode/actions/workflows/tests.yaml/badge.svg)](https://github.com/mjaschen/bezahlcode/actions/workflows/tests.yaml) [![Latest Stable Version](https://poser.pugx.org/mjaschen/bezahlcode/v/stable.png)](https://packagist.org/packages/mjaschen/bezahlcode)
 
 ## Introduction
 
