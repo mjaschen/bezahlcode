@@ -2,6 +2,7 @@
 
 namespace MarcusJaschen\BezahlCode\Type;
 
+use Endroid\QrCode\ErrorCorrectionLevel;
 use MarcusJaschen\BezahlCode\Type\Exception\InvalidParameterException;
 use MarcusJaschen\BezahlCode\Type\Exception\InvalidQRCodeParameterException;
 use PHPUnit\Framework\TestCase;
@@ -35,8 +36,8 @@ class TransferTest extends TestCase
      */
     public function testSetQrSettingWorksAsExpected(): void
     {
-        $this->bezahlCode->setQrSetting('level', 'H');
-        self::assertEquals('H', $this->bezahlCode->getQrSetting('level'));
+        $this->bezahlCode->setQrSetting('level', ErrorCorrectionLevel::High);
+        self::assertEquals(ErrorCorrectionLevel::High, $this->bezahlCode->getQrSetting('level'));
     }
 
     /**
