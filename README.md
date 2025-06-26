@@ -18,10 +18,11 @@
 
 ## Requirements
 
-*BezahlCode* requires at least PHP 7.3. PHP 8.0 is fully supported.
+*BezahlCode* requires at least PHP 8.2.
 
 If you're using an older PHP version, you can install:
 
+- *BezahlCode* 3.x which is compatible to PHP versions >= 7.3 or
 - *BezahlCode* 2.x which is compatible to PHP versions >= 7.1 or
 - *BezahlCode* 1.x which is compatible to PHP versions >= 5.3.
 
