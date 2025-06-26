@@ -3,6 +3,17 @@
 All notable changes to `mjaschen/phpgeo` will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [4.0.0] - 2025-06-25
+
+### changes which breaking backwards compatibility
+
+- increased minimum required PHP version to 8.2
+- update PHPUnit to 11.x
+- update tests
+- upgrade endroid/qr-code to v6 and adjust to new API
+- Bezahlcode parameters (recipient, IBAN, ...) are now all the type *string* with one exception: the amount has to be provided as float (will be upgraded to a money class in the next major release)
+- `saveBezahlCode()` and `getBezahlCode()` now both accept a type argument ('png', 'svg', etc.; default value is 'png')
+
 ## [3.0.0] - 2021-08-27
 
 ### changes which breaking backwards compatibility
